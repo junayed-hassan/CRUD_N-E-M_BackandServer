@@ -34,6 +34,7 @@ async function run() {
     // Reference the collection
     const database = client.db("coffeeDB"); // Replace 'coffeeDB' with your database name
     coffeeCollection = database.collection("coffees"); // Replace 'coffees' with your collection name
+    usersCollection = database.collection("users"); // Replace 'users' with your collection name
 
     // GET route to retrieve all coffees
     app.get("/coffees", async (req, res) => {
@@ -115,6 +116,14 @@ async function run() {
         res.status(500).send({ message: "Internal Server Error" });
       }
     });
+
+    // POST route to add new users
+  app.post("/users", async ( req, res) => {
+    const user = req.body
+    const result = await usersCollection.insertOne(user);
+    res.send(result)
+    
+  })
 
     // Additional Routes/Endpoints can be added here
   } catch (error) {
